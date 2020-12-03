@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ArticleResource;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Contracts\Support\Jsonable;
 
 class ArticleController extends Controller
 {
+    use ApiResponse;
+
     public function index()
     {
-        return Article::all();
+        $data = ArticleResource::collection(Article::all());
+
+        return $this->success($data);
     }
 
     public function show(Article $article)
     {
-        return $article;
+        return $this->success(new ArticleResource($article));
     }
 
     public function store(Request $request)

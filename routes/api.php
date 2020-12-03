@@ -18,6 +18,9 @@ Route::post('logout', 'AuthController@logout');
 Route::get('me', 'AuthController@me');
 Route::get('refresh', 'AuthController@refresh');
 
+/**
+ * 文章
+ */
 Route::get('articles', 'ArticleController@index');
 Route::get('articles/{article}', 'ArticleController@show');
 Route::post('articles', 'ArticleController@store');
