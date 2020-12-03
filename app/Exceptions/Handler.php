@@ -66,7 +66,12 @@ class Handler extends ExceptionHandler
         //422
         if ($exception instanceof ValidationException) {
 
-            return $this->failed($exception->errors(), $exception->status);
+            $data = [
+                'message' => "Validation error",
+                'data' => $exception->errors()
+            ];
+
+            return $this->status("error", $data, $exception->status);
 
         }
         //401
