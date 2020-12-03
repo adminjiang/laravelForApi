@@ -115,9 +115,16 @@ trait ApiResponse
     public function success($data, $status = "success"){
 
         if(is_object($data)&&$data->resource instanceof LengthAwarePaginator){
-            $data=$data->resource->toArray();
-            $data['list']=$data['data'];
-            unset($data['data']);
+            $pageData=$data->resource->toArray();
+            $data=[
+                'meta'=>[
+                    "current_page"=>$pageData['current_page'],
+                    "per_page"=>$pageData['per_page'],
+                    "total"=>$pageData['total'],
+                    "last_page"=>$pageData['last_page']
+                ],
+                "list"=>$pageData['data']
+            ];
         }
         return $this->status($status,compact('data'));
     }

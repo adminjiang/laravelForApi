@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleStoreRequest;
 use App\Http\Resources\ArticleResource;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Article;
-use Illuminate\Contracts\Support\Jsonable;
 
 class ArticleController extends Controller
 {
     use ApiResponse;
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = ArticleResource::collection(Article::all());
+        $data = ArticleResource::collection(Article::paginate((int)$request->get('limit')??10));
 
         return $this->success($data);
     }
@@ -24,11 +24,11 @@ class ArticleController extends Controller
         return $this->success(new ArticleResource($article));
     }
 
-    public function store(Request $request)
+    public function store(ArticleStoreRequest $request)
     {
-        $article = Article::create($request->all());
+        Article::create($request->all());
 
-        return response()->json($article, 201);
+        return $this->message('添加成功');
     }
 
     public function update(Request $request, Article $article)
