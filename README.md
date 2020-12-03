@@ -6,6 +6,8 @@ To install the project you can use composer
 
 ```bash
 composer install
+
+php artisan jwt:secret
 ```
 
 Modify the .env file to suit your needs
