@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginFormRequest;
 use App\Http\Requests\Auth\RegisterFormRequest;
 use App\Traits\ApiResponse;
-use App\User;
+use App\Http\Models\User;
 use Illuminate\Http\Response;
 
 class AuthController extends Controller
