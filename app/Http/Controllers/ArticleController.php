@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ArticleStoreRequest;
-use App\Http\Resources\ArticleResource;
+use App\Http\Resources\Article\ArticleResource;
+use App\Http\Requests\Article\ArticleStoreRequest;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Article;
