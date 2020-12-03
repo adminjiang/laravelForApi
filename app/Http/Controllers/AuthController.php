@@ -45,7 +45,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth('api')->user());
+        return $this->success(auth('api')->user());
     }
 
     /**
@@ -57,7 +57,7 @@ class AuthController extends Controller
     {
         auth('api')->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->message("Successfully logged out");
     }
 
     /**
@@ -77,10 +77,8 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->password = bcrypt($request->password);
         $user->save();
-        return response([
-            'status' => 'success',
-            'data' => $user
-        ], 200);
+
+        $this->created("注册成功");
     }
 
     /**
@@ -92,7 +90,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        return  $this->success([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60

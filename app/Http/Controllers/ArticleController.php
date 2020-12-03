@@ -28,7 +28,7 @@ class ArticleController extends Controller
     {
         Article::create($request->all());
 
-        return $this->message('添加成功');
+        return $this->created('添加成功');
     }
 
     public function update(Request $request, Article $article)
