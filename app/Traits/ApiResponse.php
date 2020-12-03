@@ -2,7 +2,7 @@
 namespace App\Traits;
 
 use Illuminate\Http\Response;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
 trait ApiResponse
 {
@@ -114,7 +114,7 @@ trait ApiResponse
      */
     public function success($data, $status = "success"){
 
-        if(is_object($data)&&$data->resource instanceof LengthAwarePaginator){
+        if(is_object($data)&&$data->resource instanceof Paginator){
             $pageData=$data->resource->toArray();
             $data=[
                 'meta'=>[

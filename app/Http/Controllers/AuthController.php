@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
+use App\Traits\ApiResponse;
 use App\User;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
+
+    use ApiResponse;
     /**
      * Create a new AuthController instance.
      *
@@ -28,7 +32,7 @@ class AuthController extends Controller
         $credentials = $request->all();
 
         if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->failed("Unauthorized",Response::HTTP_UNAUTHORIZED);
         }
 
         return $this->respondWithToken($token);

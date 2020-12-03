@@ -35,13 +35,13 @@ class ArticleController extends Controller
     {
         $article->update($request->all());
 
-        return response()->json($article, 200);
+        return $this->message('修改成功');
     }
 
     public function delete(Article $article)
     {
         $article->delete();
 
-        return response()->json(null, 204);
+        return $this->message('删除成功');
     }
 }

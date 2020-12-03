@@ -2,13 +2,17 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
+
+    use ApiResponse;
     /**
      * A list of the exception types that are not reported.
      *
@@ -52,11 +56,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //404
         if($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException){
-            return response()->json([
-                'error' => 'Resource not found.'
-            ],404);
+
+           return  $this->failed('Resource not found',404);
         }
+
+        if ($exception instanceof ValidationException){
+
+            return $this->failed($exception->errors(),$exception->status);
+
+        }
+
         return parent::render($request, $exception);
     }
 }
